@@ -255,7 +255,7 @@ export default function ExpenseList() {
             </div>
             <div className="mb-6">
               <p className="text-sm text-gray-700">
-                Are you sure you want to delete the expense "{deletingExpense.reason}" for ${parseFloat(deletingExpense.amount).toFixed(2)}?
+                Are you sure you want to delete the expense {deletingExpense.reason} for ${parseFloat(deletingExpense.amount).toFixed(2)}?
               </p>
             </div>
             <div className="flex space-x-3">
