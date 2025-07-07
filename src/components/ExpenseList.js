@@ -4,13 +4,16 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { format, parseISO } from 'date-fns';
 import AddExpenseForm from './AddExpenseForm';
-import { Plus, X, Calendar, DollarSign, Receipt } from 'lucide-react';
+import EditExpenseForm from './EditExpenseForm';
+import { Plus, X, Calendar, DollarSign, Receipt, Edit, Trash2 } from 'lucide-react';
 
 export default function ExpenseList() {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingExpense, setEditingExpense] = useState(null);
+  const [deletingExpense, setDeletingExpense] = useState(null);
   const { token } = useAuth();
 
   const fetchExpenses = async () => {
@@ -36,6 +39,33 @@ export default function ExpenseList() {
   const handleExpenseAdded = (newExpense) => {
     setExpenses(prev => [newExpense, ...prev]);
     setShowAddForm(false);
+  };
+
+  const handleExpenseUpdated = (updatedExpense) => {
+    setExpenses(prev => 
+      prev.map(exp => exp._id === updatedExpense._id ? updatedExpense : exp)
+    );
+    setEditingExpense(null);
+  };
+
+  const handleExpenseDeleted = async (expenseId) => {
+    try {
+      const response = await fetch(`/api/expenses/${expenseId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete expense');
+      }
+
+      setExpenses(prev => prev.filter(exp => exp._id !== expenseId));
+      setDeletingExpense(null);
+    } catch (error) {
+      console.error('Delete error:', error);
+    }
   };
 
   const groupedExpenses = expenses.reduce((groups, expense) => {
@@ -107,9 +137,7 @@ export default function ExpenseList() {
 
         {/* Form */}
         {showAddForm && (
-          // <div className="p-6 border border-gray-200 rounded-2xl shadow-sm">
-            <AddExpenseForm onExpenseAdded={handleExpenseAdded} />
-          // </div>
+          <AddExpenseForm onExpenseAdded={handleExpenseAdded} />
         )}
 
         {/* Empty State */}
@@ -145,7 +173,6 @@ export default function ExpenseList() {
                     <h2 className="text-lg font-medium text-gray-900">{monthName}</h2>
                   </div>
                   <div className="flex items-center space-x-1 text-sm text-gray-600">
-                    {/* <DollarSign size={14} /> */}
                     <span>${monthTotal.toFixed(2)}</span>
                   </div>
                 </div>
@@ -158,7 +185,6 @@ export default function ExpenseList() {
                         {format(parseISO(date), 'EEEE, MMMM d')}
                       </p>
                       <div className="flex items-center space-x-1 text-sm text-gray-600">
-                        {/* <DollarSign size={14} /> */}
                         <span>
                           ${monthExpenses[date].reduce((sum, e) => sum + parseFloat(e.amount), 0).toFixed(2)}
                         </span>
@@ -166,17 +192,31 @@ export default function ExpenseList() {
                     </div>
                     <div className="divide-y divide-gray-100">
                       {monthExpenses[date].map(exp => (
-                        <div key={exp.id} className="p-4 hover:bg-gray-50 transition">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <p className="text-sm font-medium text-gray-900">{exp.reason}</p>
-                              <p className="text-xs text-gray-500">
-                                Added on {format(parseISO(exp.created_at), 'MMM d, yyyy')}
-                              </p>
-                            </div>
+                        <div key={exp._id} className="p-4 hover:bg-gray-50 transition flex justify-between items-center">
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{exp.reason}</p>
+                            <p className="text-xs text-gray-500">
+                              Added on {format(parseISO(exp.created_at), 'MMM d, yyyy')}
+                            </p>
+                          </div>
+                          <div className="flex items-center space-x-2">
                             <p className="text-right text-base font-semibold text-gray-800">
                               ${parseFloat(exp.amount).toFixed(2)}
                             </p>
+                            <button
+                              onClick={() => setEditingExpense(exp)}
+                              className="p-1 text-indigo-600 hover:bg-indigo-50 rounded"
+                              title="Edit"
+                            >
+                              <Edit size={18} />
+                            </button>
+                            <button
+                              onClick={() => setDeletingExpense(exp)}
+                              className="p-1 text-red-600 hover:bg-red-50 rounded"
+                              title="Delete"
+                            >
+                              <Trash2 size={18} />
+                            </button>
                           </div>
                         </div>
                       ))}
@@ -188,6 +228,53 @@ export default function ExpenseList() {
           })
         )}
       </div>
+
+      {/* Edit Modal */}
+      {editingExpense && (
+        <EditExpenseForm
+          expense={editingExpense}
+          onSave={handleExpenseUpdated}
+          onCancel={() => setEditingExpense(null)}
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deletingExpense && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                  <Trash2 className="h-5 w-5 text-red-600" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">Delete Expense</h3>
+                <p className="text-sm text-gray-500">This action cannot be undone.</p>
+              </div>
+            </div>
+            <div className="mb-6">
+              <p className="text-sm text-gray-700">
+                Are you sure you want to delete the expense "{deletingExpense.reason}" for ${parseFloat(deletingExpense.amount).toFixed(2)}?
+              </p>
+            </div>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setDeletingExpense(null)}
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleExpenseDeleted(deletingExpense._id)}
+                className="flex-1 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
