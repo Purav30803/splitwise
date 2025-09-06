@@ -3,8 +3,8 @@ import { MongoClient } from 'mongodb';
 let client = null;
 let db = null;
 
-const uri = process.env.MONGODB_URI || 'mongodb+srv://purav:Purav308@cluster0.al3fi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-const dbName = 'splitwise';
+const uri = process.env.NEXT_MONGODB_URI
+const dbName = process.env.NEXT_DB
 
 export async function getDatabase() {
   if (db) return db;
