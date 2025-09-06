@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.NEXT_JWT_SECRET;
 
 export function generateToken(userId) {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7000d' });
 }
 
 export function verifyToken(token) {

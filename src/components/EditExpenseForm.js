@@ -64,7 +64,7 @@ export default function EditExpenseForm({ expense, onSave, onCancel }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-opacity-10 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Edit Expense</h3>
@@ -136,14 +136,14 @@ export default function EditExpenseForm({ expense, onSave, onCancel }) {
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="flex-1 cursor-pointer px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              className="flex-1 flex cursor-pointer items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
             >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />

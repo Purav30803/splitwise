@@ -92,7 +92,7 @@ export default function AddExpenseForm({ onExpenseAdded }) {
           <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount</label>
           <div className="relative">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400 text-base">
-              $
+              ₹
             </div>
             <input
               type="number"

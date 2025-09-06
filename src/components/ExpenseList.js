@@ -173,7 +173,7 @@ export default function ExpenseList() {
                     <h2 className="text-lg font-medium text-gray-900">{monthName}</h2>
                   </div>
                   <div className="flex items-center space-x-1 text-sm text-gray-600">
-                    <span>${monthTotal.toFixed(2)}</span>
+                    <span>₹ {monthTotal.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -186,7 +186,7 @@ export default function ExpenseList() {
                       </p>
                       <div className="flex items-center space-x-1 text-sm text-gray-600">
                         <span>
-                          ${monthExpenses[date].reduce((sum, e) => sum + parseFloat(e.amount), 0).toFixed(2)}
+                          ₹{monthExpenses[date].reduce((sum, e) => sum + parseFloat(e.amount), 0).toFixed(2)}
                         </span>
                       </div>
                     </div>
@@ -201,7 +201,7 @@ export default function ExpenseList() {
                           </div>
                           <div className="flex items-center space-x-2">
                             <p className="text-right text-base font-semibold text-gray-800">
-                              ${parseFloat(exp.amount).toFixed(2)}
+                              ₹{parseFloat(exp.amount).toFixed(2)}
                             </p>
                             <button
                               onClick={() => setEditingExpense(exp)}
@@ -240,7 +240,7 @@ export default function ExpenseList() {
 
       {/* Delete Confirmation Modal */}
       {deletingExpense && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-opacity-10! backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
             <div className="flex items-center space-x-3 mb-4">
               <div className="flex-shrink-0">
@@ -255,7 +255,7 @@ export default function ExpenseList() {
             </div>
             <div className="mb-6">
               <p className="text-sm text-gray-700">
-                Are you sure you want to delete the expense {deletingExpense.reason} for ${parseFloat(deletingExpense.amount).toFixed(2)}?
+                Are you sure you want to delete the expense {deletingExpense.reason} for ₹{parseFloat(deletingExpense.amount).toFixed(2)}?
               </p>
             </div>
             <div className="flex space-x-3">

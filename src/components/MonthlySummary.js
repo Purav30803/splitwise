@@ -160,18 +160,18 @@ export default function MonthlySummary() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="border border-gray-200 rounded-xl p-4 bg-white">
             <p className="text-sm text-gray-500">Total Expenses</p>
-            <p className="text-2xl font-semibold text-gray-900 mt-1">${summary.total.toFixed(2)}</p>
+            <p className="text-2xl font-semibold text-gray-900 mt-1">₹{summary.total.toFixed(2)}</p>
             <p className="text-xs text-gray-400 mt-1">{getMonthName(selectedMonth.month)} {selectedMonth.year}</p>
           </div>
           <div className="border border-gray-200 rounded-xl p-4 bg-white">
             <p className="text-sm text-gray-500">Daily Average</p>
-            <p className="text-2xl font-semibold text-gray-900 mt-1">${getAverageDaily().toFixed(2)}</p>
+            <p className="text-2xl font-semibold text-gray-900 mt-1">₹{getAverageDaily().toFixed(2)}</p>
             <p className="text-xs text-gray-400 mt-1">{summary.dailyBreakdown.length} active days</p>
           </div>
           <div className="border border-gray-200 rounded-xl p-4 bg-white">
             <p className="text-sm text-gray-500">Highest Day</p>
             <p className="text-2xl font-semibold text-gray-900 mt-1">
-              ${getHighestDay() ? parseFloat(getHighestDay().total).toFixed(2) : '0.00'}
+              ₹{getHighestDay() ? parseFloat(getHighestDay().total).toFixed(2) : '0.00'}
             </p>
             <p className="text-xs text-gray-400 mt-1">
               {getHighestDay() ? format(parseISO(getHighestDay().date), 'MMM d') : 'No data'}
@@ -197,7 +197,7 @@ export default function MonthlySummary() {
                   <div key={i}>
                     <div className="flex justify-between text-sm text-gray-800">
                       <span>{format(parseISO(day.date), 'MMM d, yyyy')}</span>
-                      <span className="font-medium">${parseFloat(day.total).toFixed(2)}</span>
+                      <span className="font-medium">₹{parseFloat(day.total).toFixed(2)}</span>
                     </div>
                     <div className="w-full h-2 bg-gray-200 rounded mt-1">
                       <div
@@ -229,7 +229,7 @@ export default function MonthlySummary() {
                   </div>
                   <div className="text-right">
                     <p className="text-base font-semibold text-gray-900">
-                      ${parseFloat(expense.amount).toFixed(2)}
+                      ₹{parseFloat(expense.amount).toFixed(2)}
                     </p>
                     <p className="text-xs text-gray-400">
                       {((parseFloat(expense.amount) / summary.total) * 100).toFixed(1)}% of total
