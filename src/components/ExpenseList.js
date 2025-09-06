@@ -158,7 +158,7 @@ export default function ExpenseList() {
           </div>
         ) : (
           sortedMonths.map(monthKey => {
-            const monthDate = new Date(monthKey + '-01');
+            const monthDate = new Date(monthKey + '-02');
             const monthName = format(monthDate, 'MMMM yyyy');
             const monthExpenses = groupedExpenses[monthKey];
             const sortedDates = Object.keys(monthExpenses).sort((a, b) => new Date(b) - new Date(a));
