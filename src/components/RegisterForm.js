@@ -222,7 +222,7 @@ export default function RegisterForm() {
 
       {/* Footer */}
       <div className="mt-8 text-center text-xs text-gray-500">
-        <p>© 2025 Splitwise Clone. Made with ❤️ for sharing expenses.</p>
+        <p>© 2025 Splitwise. Made with ❤️ for counting expenses.</p>
       </div>
     </div>
   </div>

@@ -142,7 +142,7 @@ export default function AddExpenseForm({ onExpenseAdded }) {
         <button
           type="submit"
           disabled={loading || success}
-          className="w-full flex justify-center items-center space-x-2 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-900 hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-black text-white! rounded-lg hover:bg-gray-800 transition-colors cursor-pointer flex justify-center items-center space-x-2 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-900 hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>

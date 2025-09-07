@@ -18,7 +18,10 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        <div className="relative">
+          <div className="h-10 w-10 rounded-full border-4 border-gray-200 animate-spin"></div>
+          <div className="h-10 w-10 rounded-full border-4 border-gray-900 border-t-transparent animate-spin absolute inset-0"></div>
+        </div>
       </div>
     );
   }

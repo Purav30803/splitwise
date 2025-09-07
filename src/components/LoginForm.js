@@ -60,7 +60,7 @@ export default function LoginForm() {
       <div className="text-center mb-8">
        
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
-        <p className="text-gray-600">Sign in to split expenses with friends</p>
+        <p className="text-gray-600">Sign in to continue</p>
       </div>
 
       {/* Login Card */}
@@ -159,7 +159,7 @@ export default function LoginForm() {
 
         {/* Sign Up Link */}
         <div className="mt-6 text-center">
-          <span className="text-sm text-gray-600">Don't have an account? </span>
+          <span className="text-sm text-gray-600">Dont have an account? </span>
           <Link href="/register">
             <button className="text-sm hover:underline cursor-pointer font-medium text-emerald-600 hover:text-emerald-500 transition-colors">
               Sign up for free
@@ -170,7 +170,7 @@ export default function LoginForm() {
 
       {/* Footer */}
       <div className="mt-8 text-center text-xs text-gray-500">
-        <p>© 2025 Splitwise Clone. Made with ❤️ for sharing expenses.</p>
+        <p>© 2025 Splitwise. Made with ❤️ for counting expenses.</p>
       </div>
     </div>
   </div>
